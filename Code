@@ -1,0 +1,70 @@
+#function 1
+def encrypter(message, shift, letters, special_characters):
+  newlist = []
+  message = message.casefold() #string method: makes string lowercase
+  for letter_in_message in message:
+    if letter_in_message in special_characters:
+      encrypted_letter = '*'
+    else:
+      letter_index = letters.index(letter_in_message) #Takes the isoalted value and locates its index on the list
+      encrypted_index = (letter_index + shift) % len(letters) #loops value back to 'a' if shift goes past 'z' (index + shift is greater than length of list)
+      encrypted_letter = letters[encrypted_index] #turns index back into the value
+    newlist.append(encrypted_letter) #Adds the encypted value to the new list
+  new_message = ''.join(newlist) #string method: joins each value in the list together to make a string
+  print(new_message)
+
+#function 2
+def decrypter(message, shift, letters, scpecial_characters):
+  newlist = []
+  message = message.casefold()
+  for letter_in_message in message:
+    if letter_in_message in special_characters:
+      encrypted_letter = letter_in_message
+    else:
+      letter_index = letters.index(letter_in_message)
+      encrypted_index = (letter_index - shift) % len(letters)
+      encrypted_letter = letters[encrypted_index]
+    newlist.append(encrypted_letter)
+  new_message = ''.join(newlist)
+  print(new_message)
+
+
+#Variables
+choice = ''
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+special_characters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "'", '"', ",", "<", ".", ">", "/", "?", " "]
+
+
+#Options
+while choice != 3:
+  while True:
+    try:
+      choice = int(input('Enter 1 to encrypt a message, 2 to decrypt a message, and 3 to quit'))
+      break
+    except ValueError:
+      print("Please enter a number.")
+  if choice == 1:
+    message = (input('What do you want to set your message as?'))
+    while True:
+      try:
+        shift = int(input('How much do you want to shift your message by?'))
+        break
+      except ValueError:
+        print('Please enter a whole number.')
+    encrypter(message, shift, letters, special_characters)
+  elif choice == 2:
+    while True:
+      message = input('What message do you want to decrypt?')
+      if message.isalpha(): #String method: checks if all the values in the string are a letter
+        break
+      else:
+        print('Please only enter letter for decryption.')
+    while True:
+      try:
+        shift = int(input('How much is the shift of the decrypted message?'))
+        break
+      except ValueError:
+        print('Please enter a whole number.')
+    decrypter(message, shift, letters, special_characters)
+  else:
+    break
